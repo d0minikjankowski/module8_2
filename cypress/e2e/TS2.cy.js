@@ -10,9 +10,15 @@ describe('my first scenario', () => {
     const cartPage = new CartPage();
     const orderPage = new OrderPage();
 
+    before(function () {
+        cy.fixture('products.json').as('ShopProducts')
+    })
+
     it('should order a product from the shop', function() {
         homePage.visitPage()
-        homePage.addProductToCart()
+        homePage.addProductToCart(this.ShopProducts.HoodieWithZipper)
+        homePage.addProductToCart(this.ShopProducts.Polo)
+        homePage.addProductToCart(this.ShopProducts.Sunglasses)
         homePage.clickGoToCartFromProductButton()
         cartPage.clickGoToPaymentsButton()
         orderPage.fillAllRequiredFields()
