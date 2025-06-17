@@ -1,12 +1,10 @@
 import HomePage from "../page_objects/homePage";
-import AccountPage from "../page_objects/homePage";
 import CartPage from "../page_objects/cartPage";
 import OrderPage from "../page_objects/orderPage";
 
 
 describe('my first scenario', () => {
     const homePage = new HomePage();
-    const accountPage = new AccountPage();
     const cartPage = new CartPage();
     const orderPage = new OrderPage();
 
@@ -19,7 +17,11 @@ describe('my first scenario', () => {
         homePage.addProductToCart(this.ShopProducts.HoodieWithZipper)
         homePage.addProductToCart(this.ShopProducts.Polo)
         homePage.addProductToCart(this.ShopProducts.Sunglasses)
-        homePage.clickGoToCartFromProductButton()
+        cy.wait(2000)
+        homePage.goToCartFromProductPage()
+        cartPage.checkThatAddedProductIsInCart(this.ShopProducts.HoodieWithZipper)
+        cartPage.checkThatAddedProductIsInCart(this.ShopProducts.Polo)
+        cartPage.checkThatAddedProductIsInCart(this.ShopProducts.Sunglasses)
         cartPage.clickGoToPaymentsButton()
         orderPage.fillAllRequiredFields()
         orderPage.clickOnBuyButton()
@@ -27,10 +29,4 @@ describe('my first scenario', () => {
 
 
     })
-
-
-
-
-
-
 })
