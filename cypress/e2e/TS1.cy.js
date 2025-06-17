@@ -1,3 +1,4 @@
+import CartPage from "../page_objects/cartPage";
 import HomePage from "../page_objects/homePage";
 import AccountPage from "../page_objects/myAccountPage";
 import { faker } from "@faker-js/faker";
@@ -5,6 +6,7 @@ import { faker } from "@faker-js/faker";
 describe('my first scenario', () => {
     const homePage = new HomePage();
     const accountPage = new AccountPage();
+    const cartPage = new CartPage();
 
     before(function () {
         cy.fixture('users.json').as('userData')
@@ -28,6 +30,15 @@ describe('my first scenario', () => {
         accountPage.clickLoginButton()
         accountPage.checkVisibilityOfErrorAfterWrongLogin()
 
+    })
+
+    it('should add product to cart and delete it from there', function() {
+        homePage.visitPage()
+        homePage.addProductToCart()
+        homePage.clickGoToCartFromProductButton()
+        cartPage.checkThatAddedProductIsInCart()
+        cartPage.removeItemFromCart()
+        cartPage.checkThatCartIsEmpty()
     })
 
 })
