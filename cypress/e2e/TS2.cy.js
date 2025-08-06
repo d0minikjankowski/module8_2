@@ -2,6 +2,8 @@ import HomePage from "../page_objects/homePage";
 import CartPage from "../page_objects/cartPage";
 import OrderPage from "../page_objects/orderPage";
 
+const zobaczKoszyk = '.added_to_cart.wc-forward'
+
 
 describe('my first scenario', () => {
     const homePage = new HomePage();
@@ -17,7 +19,7 @@ describe('my first scenario', () => {
         homePage.addProductToCart(this.ShopProducts.HoodieWithZipper)
         homePage.addProductToCart(this.ShopProducts.Polo)
         homePage.addProductToCart(this.ShopProducts.Sunglasses)
-        cy.wait(2000)
+        cy.get(zobaczKoszyk, { timeout: 10000 }).eq(2).should('be.visible')
         homePage.goToCartFromProductPage()
         cartPage.checkThatAddedProductIsInCart(this.ShopProducts.HoodieWithZipper)
         cartPage.checkThatAddedProductIsInCart(this.ShopProducts.Polo)
