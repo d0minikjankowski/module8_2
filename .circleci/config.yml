@@ -1,15 +1,62 @@
 version: 2.1
+
 orbs:
   cypress: cypress-io/cypress@2.2.0
 
+jobs:
+  install-deps:
+    docker:
+      - image: cimg/node:18.20-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-cypress-cache-{{ checksum "package-lock.json" }}
+            - v1-cypress-cache-
+      - run:
+          name: Install dependencies
+          command: |
+            npm ci
+      - save_cache:
+          key: v1-cypress-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+            - ~/.cache/Cypress
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+            - package.json
+            - package-lock.json
+
+  save-artifacts:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: .
+      - store_artifacts:
+          path: cypress/videos
+          destination: videos
+      - store_artifacts:
+          path: cypress/screenshots
+          destination: screenshots
+
 workflows:
-  build:
+  build-and-test:
     jobs:
-      - cypress/install
+      - install-deps
       - cypress/run:
           requires:
-            - cypress/install
-          store_artifacts: true
+            - install-deps
+          pre-steps:
+            - run:
+                name: Ensure Cypress binary is installed
+                command: npx cypress install
           parallel: true
+          record: true
           parallelism: 3
-          group: "UI Tests"
+          group: UI Tests
+      - save-artifacts:
+          requires:
+            - cypress/run
