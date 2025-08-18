@@ -13,4 +13,4 @@ workflows:
           parallel: true
           record: true
           parallelism: 3
-          group: "UI Tests"
+          group: UI Tests
