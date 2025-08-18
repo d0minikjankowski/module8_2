@@ -7,14 +7,7 @@ workflows:
     jobs:
       - cypress/install
       - cypress/run:
-          name: "cypress-run-1"
           requires:
             - cypress/install
-      - cypress/run:
-          name: "cypress-run-2" 
-          requires:
-            - cypress/install
-      - cypress/run:
-          name: "cypress-run-3"
-          requires:
-            - cypress/install
+          parallel: true
+          record: true
