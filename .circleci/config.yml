@@ -12,4 +12,4 @@ workflows:
           store_artifacts: true
           parallel: true
           parallelism: 3
-          group: "UI Tests"
+          group: "2 machines"
