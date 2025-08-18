@@ -1,16 +1,52 @@
 version: 2.1
+
 orbs:
   cypress: cypress-io/cypress@2.2.0
+
+jobs:
+  install-deps:
+    docker:
+      - image: cimg/node:18.20-browsers
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            # jeśli ci dalej sypie błędem, zamień na: npm install
+            npm ci
+      - persist_to_workspace:
+          root: .
+          paths:
+            - node_modules
+            - package.json
+            - package-lock.json
+
+  save-artifacts:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: .
+      - store_artifacts:
+          path: cypress/videos
+          destination: videos
+      - store_artifacts:
+          path: cypress/screenshots
+          destination: screenshots
 
 workflows:
   build:
     jobs:
-      - cypress/install
+      - install-deps
       - cypress/run:
           requires:
-            - cypress/install
-          # store-artifacts: true
+            - install-deps
+          docker:
+            - image: cimg/node:18.20-browsers
           parallel: true
           record: true
           parallelism: 3
           group: UI Tests
+      - save-artifacts:
+          requires:
+            - cypress/run
