@@ -52,7 +52,7 @@ workflows:
           pre-steps:
             - run:
                 name: Ensure Cypress binary is installed
-                command: npx cypress install
+                command: npm cypress install
           parallel: true
           record: true
           parallelism: 3
