@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   cypress: cypress-io/cypress@2.2.0
+  
 workflows:
   build:
     jobs:
@@ -8,7 +9,7 @@ workflows:
       - cypress/run:
         requires:
           - cypress/install
-        store_artifacts: true
+        store-artifacts: true
         parallel: true
         parallelism: 3
         group: "2 machines"
