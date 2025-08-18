@@ -12,7 +12,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            # jeśli ci dalej sypie błędem, zamień na: npm install
+            # jeśli ci się sypie na npm ci -> zamień na npm install
             npm ci
       - persist_to_workspace:
           root: .
@@ -41,8 +41,7 @@ workflows:
       - cypress/run:
           requires:
             - install-deps
-          docker:
-            - image: cimg/node:18.20-browsers
+          # UWAGA: tutaj już bez docker!
           parallel: true
           record: true
           parallelism: 3
