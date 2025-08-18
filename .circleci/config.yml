@@ -1,5 +1,5 @@
 version: 2.1
-
+# dodaję komentarz żeby to gunwo działało
 orbs:
   cypress: cypress-io/cypress@2.2.0
 
