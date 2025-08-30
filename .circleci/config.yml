@@ -1,6 +1,4 @@
 version: 2.1
-docker:
-  - image: cimg/node:20.17
 orbs:
   cypress: cypress-io/cypress@2.2.0
 workflows:
