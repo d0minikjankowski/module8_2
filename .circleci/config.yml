@@ -7,7 +7,7 @@ workflows:
       - cypress/install
       - cypress/run:
             requires:
-            - cypress/installs
+              - cypress/installs
             store_artifacts: true
             parallel: true
             parallelism: 3
