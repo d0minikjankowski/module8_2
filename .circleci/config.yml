@@ -7,8 +7,8 @@ workflows:
       - cypress/install
       - cypress/run:
           requires:
-          - cypress/install
-        store_artifats: true
-        parallel: true
-        parallelism: 3
-        group: 2 machines
+          - cypress/installs
+          store_artifats: true
+          parallel: true
+          parallelism: 3
+          group: 2 machines
