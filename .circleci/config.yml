@@ -4,8 +4,8 @@ orbs:
 workflows:
   build:
     jobs:
-      - cypress/install
-      - cypress/run:
+        - cypress/install
+        - cypress/run:
             requires:
               - cypress/installs
             store_artifacts: true
