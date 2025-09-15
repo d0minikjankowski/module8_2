@@ -1,7 +1,7 @@
 import CartPage from "../page_objects/cartPage";
 import HomePage from "../page_objects/homePage";
 import AccountPage from "../page_objects/myAccountPage";
-import { faker } from "@faker-js/faker";
+// import { faker } from "@faker-js/faker";
 
 describe('my first scenario', () => {
     const homePage = new HomePage();
@@ -25,8 +25,8 @@ describe('my first scenario', () => {
 
     it('should not login to the application', function () {
         accountPage.visitPage()
-        accountPage.fillUsernameFieldWithEmail(faker.internet.email())
-        accountPage.fillPasswordField(faker.internet.password())
+        // accountPage.fillUsernameFieldWithEmail(faker.internet.email())
+        // accountPage.fillPasswordField(faker.internet.password())
         accountPage.clickLoginButton()
         accountPage.checkVisibilityOfErrorAfterWrongLogin()
 
